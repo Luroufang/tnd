@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+<body>
+{% if msg %}
+<p>{{msg}}</p>
+{% end %}
+<form action="/login" enctype="multipart/form-data" method="post" >
+    <div>
+        用户名：<input type="text"  name="username" width="200">
+    </div>
+    <div>
+        密&emsp;码：<input type="password" name="password" width="200">
+    </div>
+    <div>
+        <input type="submit" value="登录" name="reg">
+    </div>
+    <div>
+        没有账号请<a href="/register">注册</a>
+    </div>
+</form>
+</body>
+</html>
