@@ -1,10 +1,14 @@
-from tornado.web import RequestHandler
-from utills.account import register
+import tornado.web
+from utills.account import register, login
+from .main import BaseHandler
 
 
 
 
-class RegisterHandler(RequestHandler):
+request = tornado.web.RequestHandler
+
+# 注册
+class RegisterHandler(request):
     def get(self, *args, **kwargs):
         self.render("auth/register.html", msg='')
 
@@ -26,19 +30,26 @@ class RegisterHandler(RequestHandler):
         else:
             self.render('auth/register.html', msg='输入不能为空')
 
-
-
-
-
-
-
-
-class LoginHandler(RequestHandler):
+# 登录
+class LoginHandler(BaseHandler):
     def get(self, *args, **kwargs):
-        self.render("auth/login.html")
+        self.render("auth/login.html", msg='')
 
-    def post(self,*args,**kwargs):
-        pass
+    def post(self, *args, **kwargs):
+        username = self.get_argument('username', None)
+        password = self.get_argument('password', None)
+        if username and password:
+            msg = login(username, password)
+            if msg == 'ok':
+                self.session.set('m_user', username)
+                self.redirect('/')
+            else:
+                self.render('auth/login.html', msg=msg)
+        else:
+            self.render('auth/login.html', msg='用户名或密码不能为空')
+
+
+
 
 
 

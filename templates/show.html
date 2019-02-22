@@ -6,7 +6,9 @@
 </head>
 <body>
 <h2>this is show</h2>
-
+{% for i in imgs %}
+<img src="{{static_url(i.thumb_url)}}">
+{% end %}
 
 </body>
 </html>

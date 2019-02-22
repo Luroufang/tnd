@@ -1,5 +1,6 @@
 .idea/
 alembic.ini/
 alembic/
-static/imgs/
 utills/
+static/imgs/
+modules/connect.py/

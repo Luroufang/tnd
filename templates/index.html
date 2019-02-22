@@ -6,5 +6,8 @@
 </head>
 <body>
 <h1>this is index</h1>
+{% for i in imgs %}
+    <img src="{{static_url(i.image_url)}}">
+{% end %}
 </body>
 </html>
