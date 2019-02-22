@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import Column, String, Integer, DateTime,ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import exists
-from modules.connect import Base, Session
+from modules.connect.connect import Base, Session
 
 session = Session()
 
