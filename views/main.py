@@ -37,12 +37,12 @@ class UploadHandler(BaseHandler):
         img_list = self.request.files.get('upimgs', None)
         for img in img_list:
             print(img)
-            save_to = 'static/uploads/{}'.format(img['filename'])
+            save_to = 'static/imgs/uploads/{}'.format(img['filename'])
             with open(save_to, 'wb') as f:
                 f.write(img['body'])
             thumb_path = make_thumb(save_to)
 
-            image_url = 'uploads/{}'.format(img['filename'])
+            image_url = 'imgs/uploads/{}'.format(img['filename'])
             thumb_url = os.path.relpath(thumb_path, 'static')
             Post.add_post(self.current_user, image_url, thumb_url)
         self.write('upload done')
