@@ -1,9 +1,8 @@
 from pycket.session import SessionMixin
 from tornado.web import authenticated
 from tornado.web import RequestHandler
-import os
 
-from utills.photo import get_images, make_thumb
+from views.photo import UploadImages
 from modules.account import Post
 
 class BaseHandler(RequestHandler, SessionMixin):
@@ -37,13 +36,15 @@ class UploadHandler(BaseHandler):
         img_list = self.request.files.get('upimgs', None)
         for img in img_list:
             print(img)
-            save_to = 'static/imgs/uploads/{}'.format(img['filename'])
-            with open(save_to, 'wb') as f:
-                f.write(img['body'])
-            thumb_path = make_thumb(save_to)
+            #实例化
+            upload_im = UploadImages('static',img['filename'])
+            #保存图片
+            upload_im.save_images(img['body'])
+            #形成缩略图并保存
+            upload_im.make_thumb()
 
-            image_url = 'imgs/uploads/{}'.format(img['filename'])
-            thumb_url = os.path.relpath(thumb_path, 'static')
-            Post.add_post(self.current_user, image_url, thumb_url)
+            #图片信息保存到数据库
+            Post.add_post(self.current_user,upload_im.image_path,upload_im.thumb_path)
+
         self.write('upload done')
 
